@@ -10,8 +10,11 @@ contract Club {
     
     //this is members count when the contract change owner to the best seller
     uint constant public maxMembers = 2000000; 
+    //the mebers is a mapping with address and generation the user is/was member
+    //so if generation is 3 and members[address] is not 3, the user is not a member on that generation
     mapping(address => uint) public members;
-    mapping(address => uint) public presentedCount;
+    //presented count is by generation
+    mapping( uint => mapping(address => uint)) public presentedCount; 
     constructor () public {
         owner = msg.sender;
         members[owner] = generation;
@@ -59,8 +62,8 @@ contract Club {
             if( members[presentedby]==generation && members[msg.sender] < generation){
                 members[msg.sender] = generation; // the presented guy join the club
                 membersCount++;
-                presentedCount[presentedby]++;
-                uint count = presentedCount[presentedby];
+                presentedCount[generation][presentedby]++;
+                uint count = presentedCount[generation][presentedby];
                 if( count%2 == 0){
                     //reward member each couple of presented new members!
                     presentedby.transfer(price);
