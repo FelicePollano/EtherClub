@@ -2,8 +2,12 @@ pragma solidity ^0.4.23;
 
 contract Club {
     address public owner;
-    uint public price;
+    uint public price; //price to join the Club
     uint public membersCount;
+    uint public bestSale; //the best sale till now
+    address public bestSeller; //the user who presented more users
+    //this is members count when the contract change owner to the best seller
+    uint constant public maxMembers = 1000000; 
     mapping(address => bool) public members;
     mapping(address => uint) public presentedCount;
     constructor () public {
@@ -11,6 +15,7 @@ contract Club {
         members[owner] = true;
         membersCount = 1;
         price = 10 finney; //milliether 
+        bestSale = 0; //
     } 
     //amount is in wei
     function withdrwaw(uint amount) public returns(bool){
@@ -33,19 +38,25 @@ contract Club {
         }
         return false;
     }
-    //call this function to join the Ponzi's pyramid
+    //call this function to join the  club
     //presentedby is the address of whom invited you
     function join(address presentedby) public payable {
         if(msg.value==price){
-            //presenter must be a member of the Ponzi's pyramid 
-            //an user already in the pyramid can't join again
+            //presenter must be a member of the  club 
+            //an user already in the club can't join again
             if( members[presentedby]==true && members[msg.sender] != true){
-                members[msg.sender] = true; // the presented guy join the ponzy's schema
+                members[msg.sender] = true; // the presented guy join the club
                 membersCount++;
                 presentedCount[presentedby]++;
-                if( presentedCount[presentedby] > 0 && presentedCount[presentedby]%2 == 0){
+                uint count = presentedCount[presentedby];
+                if( count%2 == 0){
                     //reward member each couple of presented new members!
                     presentedby.transfer(price);
+                 }
+                 //check best seller
+                if( count > bestSale ){
+                    bestSale = count;
+                    bestSeller = presentedby;
                  }
             }else{
                 revert();
