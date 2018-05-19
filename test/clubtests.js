@@ -45,19 +45,20 @@ contract('test', async (accounts) => {
   
 
 }),
-it("report correctly the best seller"),async ()=>{
+it("report correctly the best seller"),async () => {
   //presenter is the contract creator
   let presenter = accounts[0];
   let from = accounts[1]; //new user joining the schema
   await instance.join(presenter,{value:web3.toWei(10,"finney"), from:from});
   //at present best seller is presenter
-  let bestSeller = await instance.bestSeller.call();
-  assert.equal(bestSeller,presenter);
+  let bestSeller = await instance.call.bestSeller();
+  assert.equal(bestSeller.valueOf(),presenter);
   //lets now the new joined user invite two users...
-  await instance.join(from,{value:web3.toWei(10,"finney"), from:address[5]});
-  await instance.join(from,{value:web3.toWei(10,"finney"), from:address[6]});
+  await instance.join(from,{value:web3.toWei(10,"finney"), from:address[2]});
+  await instance.join(from,{value:web3.toWei(10,"finney"), from:address[3]});
+  bestSeller = await instance.call.bestSeller();
   //it must be the new best seller
-  assert.equal(bestSeller,presenter);
+  assert.equal(bestSeller.valueOf(),from);
 
 
 }
