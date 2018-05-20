@@ -50,7 +50,7 @@ contract('test', async (accounts) => {
   
 
 }),
-it("report correctly the best seller"),async () => {
+it("report correctly the best seller",async () => {
   //presenter is the contract creator
   let presenter = accounts[0];
   let from = accounts[1]; //new user joining the schema
@@ -66,7 +66,7 @@ it("report correctly the best seller"),async () => {
   //*assert.equal(bestSeller,from);
 
 
-}
+}),
 it("receive a reward presenting two users", async () => {
   
   //presenter is the contract creator
