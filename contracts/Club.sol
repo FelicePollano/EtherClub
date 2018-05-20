@@ -5,14 +5,15 @@ contract Club {
     uint public price; //price to join the Club
     uint public membersCount;
     uint public bestSale; //the best sale till now
+    uint private generation=1;
     address public bestSeller; //the user who presented more users
     //this is members count when the contract change owner to the best seller
-    uint constant public maxMembers = 1000000; 
-    mapping(address => bool) public members;
+    uint constant public maxMembers = 2000000; 
+    mapping(address => uint) public members;
     mapping(address => uint) public presentedCount;
     constructor () public {
         owner = msg.sender;
-        members[owner] = true;
+        members[owner] = generation;
         membersCount = 1;
         price = 10 finney; //milliether 
         bestSale = 0; //
@@ -28,14 +29,14 @@ contract Club {
         return false;
     }
     function ismember() public view returns(bool){
-        return members[msg.sender]==true;
+        return members[msg.sender]==generation;
     }
     //this function allow to invite friends or developers
     //without any fee
     function inviteFriends(address friend) public returns (bool){
         if( msg.sender == owner ){
             //friend invitation for free  does not deserve any money back
-            members[friend] = true;
+            members[friend] = generation;
             membersCount++;
             return true;
         }
@@ -47,8 +48,8 @@ contract Club {
         if(msg.value==price){
             //presenter must be a member of the  club 
             //an user already in the club can't join again
-            if( members[presentedby]==true && members[msg.sender] != true){
-                members[msg.sender] = true; // the presented guy join the club
+            if( members[presentedby]==generation && members[msg.sender] < generation){
+                members[msg.sender] = generation; // the presented guy join the club
                 membersCount++;
                 presentedCount[presentedby]++;
                 uint count = presentedCount[presentedby];
