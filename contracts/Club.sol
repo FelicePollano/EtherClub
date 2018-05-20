@@ -24,7 +24,7 @@ contract Club {
         //only owner can... 
         if( msg.sender == owner  )
         {
-            uint prize = membersCount*price/2;
+            uint prize = membersCount*price/4;
             //compute the remaining part 
             uint last = address(this).balance-prize;
             if( amount<=last ){
@@ -72,7 +72,7 @@ contract Club {
                  }
                 if( membersCount>=maxMembers ){
                     //pay the prize to the winner!
-                    uint prize = membersCount*price/2;
+                    uint prize = membersCount*price/4;
                      //compute the remaining part 
                     uint last = address(this).balance-prize;
                     bestSeller.transfer(prize);
