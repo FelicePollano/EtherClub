@@ -27,6 +27,9 @@ contract Club {
         }
         return false;
     }
+    function ismember() public view returns(bool){
+        return members[msg.sender]==true;
+    }
     //this function allow to invite friends or developers
     //without any fee
     function inviteFriends(address friend) public returns (bool){
