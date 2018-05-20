@@ -7,6 +7,7 @@ contract Club {
     uint public bestSale; //the best sale till now
     uint private generation=1;
     address public bestSeller; //the user who presented more users
+    
     //this is members count when the contract change owner to the best seller
     uint constant public maxMembers = 2000000; 
     mapping(address => uint) public members;
@@ -21,10 +22,17 @@ contract Club {
     //amount is in wei
     function withdrwaw(uint amount) public returns(bool){
         //only owner can... 
-        if( msg.sender == owner && address(this).balance >= amount )
+        if( msg.sender == owner  )
         {
-            msg.sender.transfer(amount);
-            return true;
+            uint prize = membersCount*price/2;
+            //compute the remaining part 
+            uint last = address(this).balance-prize;
+            if( amount<=last ){
+                msg.sender.transfer(amount);
+                return true;
+            }
+            else
+                return false;
         }
         return false;
     }
@@ -62,6 +70,23 @@ contract Club {
                     bestSale = count;
                     bestSeller = presentedby;
                  }
+                if( membersCount>=maxMembers ){
+                    //pay the prize to the winner!
+                    uint prize = membersCount*price/2;
+                     //compute the remaining part 
+                    uint last = address(this).balance-prize;
+                    bestSeller.transfer(prize);
+                    //transfer the remaining part to the owner
+                    if(last>0)
+                        owner.transfer(last);
+                    //game start again, bestseller is allowed to invite other members
+                    //and is the only member of the new generation
+                    generation++;
+                    members[bestSeller] = generation;
+                    membersCount = 1;
+                    bestSale = 0;
+
+                }
             }else{
                 revert();
             }
