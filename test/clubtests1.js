@@ -4,7 +4,7 @@ contract('testSuite1', async (accounts) => {
   var instance;
   beforeEach('setup contract for each test', async function () {
     await Club.deployed();
-    instance = await Club.new()
+    instance = await Club.new(6)
   })
 
   it("have an initial zero balance", async () => {

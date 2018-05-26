@@ -9,18 +9,19 @@ contract Club {
     address public bestSeller; //the user who presented more users
     
     //this is members count when the contract change owner to the best seller
-    uint constant public maxMembers = 2000000; 
+    uint maxMembers = 2000000; 
     //the mebers is a mapping with address and generation the user is/was member
     //so if generation is 3 and members[address] is not 3, the user is not a member on that generation
     mapping(address => uint) public members;
     //presented count is by generation
     mapping( uint => mapping(address => uint)) public presentedCount; 
-    constructor () public {
+    constructor (uint _maxMembers) public {
         owner = msg.sender;
         members[owner] = generation;
         membersCount = 1;
         price = 10 finney; //milliether 
         bestSale = 0; //
+        maxMembers = _maxMembers;
     } 
     //amount is in wei
     function withdrwaw(uint amount) public returns(bool){
