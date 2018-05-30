@@ -25,7 +25,7 @@ contract Club {
         maxMembers = _maxMembers;
     } 
     //amount is in wei
-    function withdrwaw(uint amount) public returns(bool){
+    function withdraw(uint amount) public returns(bool){
         //only owner can... 
         if( msg.sender == owner  )
         {
