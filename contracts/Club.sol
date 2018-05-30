@@ -5,7 +5,7 @@ contract Club {
     uint public price; //price to join the Club
     uint public membersCount;
     uint public bestSale; //the best sale till now
-    uint private generation=1;
+    uint private generation;
     address public bestSeller; //the user who presented more users
     
     //this is members count when the contract change owner to the best seller
@@ -17,6 +17,7 @@ contract Club {
     mapping( uint => mapping(address => uint)) public presentedCount; 
     constructor (uint _maxMembers) public {
         owner = msg.sender;
+        generation = 1;
         members[owner] = generation;
         membersCount = 1;
         price = 10 finney; //milliether 
@@ -40,7 +41,7 @@ contract Club {
         }
         return false;
     }
-    function ismember() public view returns(bool){
+    function amImember() public view returns(bool){
         return members[msg.sender]==generation;
     }
     //this function allow to invite friends or developers
