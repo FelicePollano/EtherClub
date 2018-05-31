@@ -27,15 +27,16 @@ it("can withdraw until the contract can pay the prize",async () => {
   let ownerBalance = await web3.eth.getBalance(accounts[0]);
   //till now prize is 10*10/4 = 25;
   //contract balance should be 50, so we should be able to withdraw at most 25 :)
-  var tx = await instance.withdraw(web3.toWei(25,"finney"));
-  console.log(tx);
+  var tx = await instance.withdraw(web3.toWei(25,"finney"),{gasPrice:web3.eth.gasPrice});
+ 
   let ownerBalanceAfter = await web3.eth.getBalance(accounts[0]);
   assert.equal(ownerBalanceAfter-ownerBalance,web3.toWei(25,"finney")-web3.eth.gasPrice.mul(tx.receipt.gasUsed)); //withdraw done
-
-  await instance.withdraw(web3.toWei(100,"finney"));
   
+  ownerBalance=await web3.eth.getBalance(accounts[0]);
+  tx = await instance.withdraw(web3.toWei(1000,"finney"),{gasPrice:web3.eth.gasPrice}); //cant get so much anymore
   ownerBalanceAfter = await web3.eth.getBalance(accounts[0]);
-  assert.equal(ownerBalanceAfter-ownerBalance,web3.toWei(0,"finney")); //withdraw done
+
+  assert.isBelow(0-web3.eth.gasPrice.mul(tx.receipt.gasUsed),ownerBalanceAfter-ownerBalance); //withdraw NOT done
   
 });
 
