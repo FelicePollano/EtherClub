@@ -24,6 +24,8 @@ contract Club {
         bestSale = 0; //
         maxMembers = _maxMembers;
     } 
+    //event to signal new members coming
+    event joined(address user);
     //amount is in wei
     function withdraw(uint amount) public returns(bool){
         //only owner can... 
@@ -92,6 +94,7 @@ contract Club {
                     bestSale = 0;
 
                 }
+                emit joined(msg.sender);
             }else{
                 revert();
             }
