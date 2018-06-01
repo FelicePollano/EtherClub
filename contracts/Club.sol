@@ -72,6 +72,8 @@ contract Club {
         return false;
     }
     //allow to store an user nickname to associate an address
+    //note this fuction intentionally does not check for membership
+    //anyone can user this smart contract to associate a nick to an address and use it
     function setNick(string _nick) public payable {
         if(msg.value==price||msg.sender==owner){
             nickNames[msg.sender] = _nick;
