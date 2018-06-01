@@ -30,7 +30,9 @@ it("can withdraw until the contract can pay the prize",async () => {
   var tx = await instance.withdraw(web3.toWei(25,"finney"),{gasPrice:web3.eth.gasPrice});
  
   let ownerBalanceAfter = await web3.eth.getBalance(accounts[0]);
-  assert.equal(ownerBalanceAfter-ownerBalance,web3.toWei(25,"finney")-web3.eth.gasPrice.mul(tx.receipt.gasUsed)); //withdraw done
+  let expectedIncrease = web3.toWei(25,"finney")-web3.eth.gasPrice.mul(tx.receipt.gasUsed);
+  let small = Math.abs(expectedIncrease-(ownerBalanceAfter-ownerBalance));
+  assert.isBelow(small,web3.toWei(0.01,"finney")); //withdraw done
   
   ownerBalance=await web3.eth.getBalance(accounts[0]);
   tx = await instance.withdraw(web3.toWei(1000,"finney"),{gasPrice:web3.eth.gasPrice}); //cant get so much anymore
