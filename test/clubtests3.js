@@ -51,6 +51,8 @@ it("give the prize for the best seller",async () => {
   await instance.join(presenter,{from:accounts[4],value:web3.toWei(10,"finney")});//accounts[0] join again
   let bestSeller =  await instance.bestSeller.call();
   assert.equal(bestSeller,presenter);
+  //even check the members count appear to be consistent again...
+  assert.equal(4,await instance.membersCount.call());
 
 });
 
