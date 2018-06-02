@@ -15,6 +15,7 @@ it("give the ability to a user to change his nick name",async () => {
   await instance.setNick("test1",{from:accounts[1],value:web3.toWei(10,"finney")});//pay for name change
   var nick = await instance.getNick.call(accounts[1]);
   assert.equal(nick,"test1");
+  //check if smart contract is payed
   assert.equal(web3.toWei(10,"finney"),await web3.eth.getBalance(instance.address)-balance);
 });
 
