@@ -17,6 +17,17 @@ contract('testSuite1', async (accounts) => {
     let owner = await instance.owner.call();
     assert.equal(owner, accounts[0]);
  }),
+ it("give the ability to the owner to change ownership", async () => {
+     
+  let owner = await instance.owner.call();
+  await instance.transferOwnership(accounts[1],{from:accounts[1]});
+  //not owner can't change
+  owner = await instance.owner.call();
+  assert.equal(owner, accounts[0],"Unexpected ownership change!");
+  await instance.transferOwnership(accounts[1],{from:owner});
+  owner = await instance.owner.call();
+  assert.equal(owner, accounts[1],"Ownership unchanged!");
+}),
  
   it("can present new user", async () => {
    

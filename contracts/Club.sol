@@ -16,6 +16,8 @@ contract Club {
     mapping(address => string) public nickNames;
     //presented count is by generation
     mapping( uint => mapping(address => uint)) public presentedCount; 
+
+    
     constructor (uint _maxMembers) public {
         owner = msg.sender;
         generation = 1;
@@ -31,6 +33,13 @@ contract Club {
     event best(address user);
     //event to signal a winner
     event winner(address user);
+
+    function transferOwnership(address _new) public{
+        if(msg.sender==owner){
+            owner = _new;
+        }
+    }
+
     //amount is in wei
     function withdraw(uint amount) public returns(bool){
         //only owner can... 
