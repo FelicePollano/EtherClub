@@ -43,7 +43,14 @@ it("give the prize for the best seller",async () => {
   assert.isFalse(await instance.amImember.call({from:accounts[0]})); //old member no more present
   
   await instance.join(presenter,{from:accounts[0],value:web3.toWei(10,"finney")});//accounts[0] join again
-  assert.isTrue(await instance.amImember.call({from:accounts[0]})); //old member no more present
+  assert.isTrue(await instance.amImember.call({from:accounts[0]})); //old member present again
+  //lets check new generation works correctly
+  //so accounts[0] become the new presenter and eventually became the best seller
+  presenter=accounts[0];
+  await instance.join(presenter,{from:accounts[3],value:web3.toWei(10,"finney")});//accounts[0] join again
+  await instance.join(presenter,{from:accounts[4],value:web3.toWei(10,"finney")});//accounts[0] join again
+  let bestSeller =  await instance.bestSeller.call();
+  assert.equal(bestSeller,presenter);
 
 });
 
