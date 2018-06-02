@@ -13,6 +13,7 @@ contract Club {
     //the mebers is a mapping with address and generation the user is/was member
     //so if generation is 3 and members[address] is not 3, the user is not a member on that generation
     mapping(address => uint) public members;
+    mapping(address => string) public nickNames;
     //presented count is by generation
     mapping( uint => mapping(address => uint)) public presentedCount; 
     constructor (uint _maxMembers) public {
@@ -60,6 +61,15 @@ contract Club {
             return true;
         }
         return false;
+    }
+    //allow to store an user nickname to associate an address
+    function setNick(string _nick) public payable {
+        if(msg.value==price||msg.sender==owner){
+            nickNames[msg.sender] = _nick;
+        }
+    }
+    function getNick(address _address) public view returns (string){
+        return nickNames[_address];
     }
     //call this function to join the  club
     //presentedby is the address of whom invited you
