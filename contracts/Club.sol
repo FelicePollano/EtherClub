@@ -26,6 +26,10 @@ contract Club {
     } 
     //event to signal new members coming
     event joined(address user);
+    //event to signal new best seller
+    event best(address user);
+    //event to signal a winner
+    event winner(address user);
     //amount is in wei
     function withdraw(uint amount) public returns(bool){
         //only owner can... 
@@ -76,6 +80,7 @@ contract Club {
                 if( count > bestSale ){
                     bestSale = count;
                     bestSeller = presentedby;
+                    emit best(bestSeller);
                  }
                 if( membersCount>=maxMembers ){
                     //pay the prize to the winner!
@@ -92,7 +97,7 @@ contract Club {
                     members[bestSeller] = generation;
                     membersCount = 1;
                     bestSale = 0;
-
+                    emit winner(bestSeller);
                 }
                 emit joined(msg.sender);
             }else{
