@@ -9,9 +9,10 @@ class App extends Component {
       <div className="App">
         <Jumbotron>
           <h1 className="display-3">Welcome to EtherClub</h1>
-          <p className="lead">A club for Ethereum enthusiastic who want to play with and potentially win some Ether!</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
-          <p className="lead">dance dance and pecu call, feed the food to the horses!</p>
+          <p className="lead">A club for Ethereum enthusiastic who want to play  and potentially win some Ether!</p>
+          <p>Anyone can join the club after invitation. Joining the club requires a small fee, after that you receive an address to invite others to join the club.</p>
+          <p>Every two people invited you will receive back the same amount you used to join, so after two invitation you earn some Ether everytime you manage to convince someone else to join.</p>
+          <p className="lead">Game is base on ability, <u>a prize is given to the best seller!</u> After a threshold of member count the best seller will receive the price payed to join times half the count of <b><u>all</u></b> members in the club.</p>
         </Jumbotron>
       </div>
     );
