@@ -83,7 +83,7 @@ it("receive a reward presenting two users", async () => {
 }),
 
  it("can't present twice", async () => {
-  //let instance = await Ponzi.deployed();
+ 
   //presenter is the contract creator
   let presenter = accounts[0];
   let from = accounts[1]; //new user joining the schema
