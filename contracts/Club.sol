@@ -122,10 +122,10 @@ contract Club {
                 }
                 emit joined(msg.sender);
             }else{
-                revert();
+                revert("not a member");
             }
         }else{
-            revert();
+            revert("price not enough");
         }
         
     }
