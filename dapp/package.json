@@ -7,8 +7,8 @@
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-scripts": "1.1.4",
-    "reactstrap": "^6.0.1",
-    "web3": "^1.0.0-beta.34"
+    "react-web3": "^0.4.5",
+    "reactstrap": "^6.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
